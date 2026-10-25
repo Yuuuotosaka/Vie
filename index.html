@@ -66,57 +66,101 @@
 <body class="min-h-screen flex flex-col justify-between selection:bg-amber-500/30">
 
   <!-- MODALE INITIALE / MODIFICATION -->
-  <div id="modalOverlay" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-md transition-opacity duration-300">
-    <div class="bg-[#11131a] border border-[#232838] w-full max-w-lg rounded-2xl p-6 sm:p-7 shadow-2xl shadow-orange-500/10 text-center relative max-h-[92vh] overflow-y-auto">
+  <div id="modalOverlay" class="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/85 backdrop-blur-md transition-opacity duration-300">
+    <div class="bg-[#11131a] border border-[#232838] w-full max-w-xl rounded-2xl p-5 sm:p-7 shadow-2xl shadow-orange-500/10 text-center relative max-h-[92vh] overflow-y-auto">
       
-      <!-- ÉTAPE 1 : QUESTIONNAIRE -->
+      <!-- ÉTAPE 1 : QUESTIONNAIRE (7 CRITÈRES) -->
       <div id="stepForm">
-        <div class="inline-flex p-3 rounded-2xl bg-gradient-to-tr from-amber-500/20 to-orange-500/20 text-orange-400 mb-3 border border-orange-500/30">
-          <svg class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+        <div class="inline-flex p-2.5 rounded-2xl bg-gradient-to-tr from-amber-500/20 to-orange-500/20 text-orange-400 mb-2 border border-orange-500/30">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
           </svg>
         </div>
-        <h2 class="text-2xl sm:text-3xl font-extrabold font-display tracking-tight text-white mb-1">Calibrer votre grille</h2>
-        <p class="text-slate-400 text-xs sm:text-sm mb-5 leading-relaxed">
-          Votre date de naissance et 3 indicateurs de mode de vie pour estimer votre grille personnalisée.
+        <h2 class="text-xl sm:text-2xl font-extrabold font-display tracking-tight text-white mb-1">Calibrage de votre espérance</h2>
+        <p class="text-slate-400 text-xs mb-4 leading-relaxed">
+          Renseignez votre date de naissance et ces 7 marqueurs de santé pour modéliser votre grille.
         </p>
 
-        <form id="profileForm" class="space-y-4 text-left">
+        <form id="profileForm" class="space-y-3.5 text-left">
+          <!-- DATE DE NAISSANCE -->
           <div>
             <label for="birthDateInput" class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-1 ml-1">Date de naissance</label>
             <input 
               type="date" 
               id="birthDateInput" 
               required
-              class="w-full bg-[#171a24] border border-[#2b3246] rounded-xl px-4 py-2.5 text-white font-medium focus:outline-none focus:border-amber-500 focus:ring-2 focus:ring-amber-500/30 transition-all cursor-pointer text-sm">
+              class="w-full bg-[#171a24] border border-[#2b3246] rounded-xl px-3.5 py-2 text-white font-medium focus:outline-none focus:border-amber-500 focus:ring-2 focus:ring-amber-500/30 transition-all cursor-pointer text-sm">
           </div>
 
-          <!-- QUESTION 1 -->
-          <div>
-            <label for="genderSelect" class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-1 ml-1">1. Sexe biologique</label>
-            <select id="genderSelect" required class="w-full bg-[#171a24] border border-[#2b3246] rounded-xl px-4 py-2.5 text-white font-medium focus:outline-none focus:border-amber-500 focus:ring-2 focus:ring-amber-500/30 transition-all cursor-pointer text-sm">
-              <option value="male">Homme (base 80 ans)</option>
-              <option value="female">Femme (base 85 ans)</option>
-            </select>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <!-- 1. SEXE BIOLOGIQUE -->
+            <div>
+              <label for="genderSelect" class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-1 ml-1">1. Sexe biologique</label>
+              <select id="genderSelect" required class="w-full bg-[#171a24] border border-[#2b3246] rounded-xl px-3 py-2 text-white font-medium focus:outline-none focus:border-amber-500 focus:ring-2 focus:ring-amber-500/30 text-xs sm:text-sm">
+                <option value="male">Homme (base Insee 80 ans)</option>
+                <option value="female">Femme (base Insee 85 ans)</option>
+              </select>
+            </div>
+
+            <!-- 2. HÉRÉDITÉ -->
+            <div>
+              <label for="hereditySelect" class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-1 ml-1">2. Longévité familiale</label>
+              <select id="hereditySelect" required class="w-full bg-[#171a24] border border-[#2b3246] rounded-xl px-3 py-2 text-white font-medium focus:outline-none focus:border-amber-500 focus:ring-2 focus:ring-amber-500/30 text-xs sm:text-sm">
+                <option value="high">Parents/grands-parents > 85 ans (+3 ans)</option>
+                <option value="average" selected>Moyenne (75 - 84 ans) (neutre)</option>
+                <option value="low">Décès précoces familiaux (< 65 ans) (-3 ans)</option>
+              </select>
+            </div>
+
+            <!-- 3. TABAC -->
+            <div>
+              <label for="smokingSelect" class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-1 ml-1">3. Tabagisme</label>
+              <select id="smokingSelect" required class="w-full bg-[#171a24] border border-[#2b3246] rounded-xl px-3 py-2 text-white font-medium focus:outline-none focus:border-amber-500 focus:ring-2 focus:ring-amber-500/30 text-xs sm:text-sm">
+                <option value="never">Jamais fumé (+1 an)</option>
+                <option value="former">Ancien fumeur sevré (-1 an)</option>
+                <option value="moderate">Fumeur occasionnel (-3 ans)</option>
+                <option value="heavy">Fumeur quotidien (-6 ans)</option>
+              </select>
+            </div>
+
+            <!-- 4. ALCOOL -->
+            <div>
+              <label for="alcoholSelect" class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-1 ml-1">4. Alcool</label>
+              <select id="alcoholSelect" required class="w-full bg-[#171a24] border border-[#2b3246] rounded-xl px-3 py-2 text-white font-medium focus:outline-none focus:border-amber-500 focus:ring-2 focus:ring-amber-500/30 text-xs sm:text-sm">
+                <option value="rare">Rare ou jamais (0 à 2 verres/sem.) (+1 an)</option>
+                <option value="moderate" selected>Modéré (3 à 7 verres/sem.) (neutre)</option>
+                <option value="heavy">Régulier / excessif (> 10 verres/sem.) (-3 ans)</option>
+              </select>
+            </div>
+
+            <!-- 5. ACTIVITÉ PHYSIQUE -->
+            <div>
+              <label for="activitySelect" class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-1 ml-1">5. Activité physique</label>
+              <select id="activitySelect" required class="w-full bg-[#171a24] border border-[#2b3246] rounded-xl px-3 py-2 text-white font-medium focus:outline-none focus:border-amber-500 focus:ring-2 focus:ring-amber-500/30 text-xs sm:text-sm">
+                <option value="sedentary">Sédentaire (< 1h par semaine) (-2 ans)</option>
+                <option value="moderate" selected>Modérée (marche, vélo quotidien) (+1 an)</option>
+                <option value="sporty">Sport régulier (≥ 3h par semaine) (+3 ans)</option>
+              </select>
+            </div>
+
+            <!-- 6. SOMMEIL -->
+            <div>
+              <label for="sleepSelect" class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-1 ml-1">6. Sommeil & Rythme</label>
+              <select id="sleepSelect" required class="w-full bg-[#171a24] border border-[#2b3246] rounded-xl px-3 py-2 text-white font-medium focus:outline-none focus:border-amber-500 focus:ring-2 focus:ring-amber-500/30 text-xs sm:text-sm">
+                <option value="regular" selected>7 à 8h régulières et réparatrices (+1 an)</option>
+                <option value="irregular">Variable ou décalé (travail de nuit) (-1 an)</option>
+                <option value="poor">Chroniquement court (< 6h) ou insomnies (-2 ans)</option>
+              </select>
+            </div>
           </div>
 
-          <!-- QUESTION 2 -->
+          <!-- 7. ALIMENTATION & SANTÉ MÉTABOLIQUE -->
           <div>
-            <label for="smokingSelect" class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-1 ml-1">2. Consommation de tabac</label>
-            <select id="smokingSelect" required class="w-full bg-[#171a24] border border-[#2b3246] rounded-xl px-4 py-2.5 text-white font-medium focus:outline-none focus:border-amber-500 focus:ring-2 focus:ring-amber-500/30 transition-all cursor-pointer text-sm">
-              <option value="never">Non-fumeur (+1 an)</option>
-              <option value="former">Ancien fumeur (-2 ans)</option>
-              <option value="smoker">Fumeur régulier (-6 ans)</option>
-            </select>
-          </div>
-
-          <!-- QUESTION 3 -->
-          <div>
-            <label for="activitySelect" class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-1 ml-1">3. Activité physique</label>
-            <select id="activitySelect" required class="w-full bg-[#171a24] border border-[#2b3246] rounded-xl px-4 py-2.5 text-white font-medium focus:outline-none focus:border-amber-500 focus:ring-2 focus:ring-amber-500/30 transition-all cursor-pointer text-sm">
-              <option value="sedentary">Sédentaire (-2 ans)</option>
-              <option value="moderate">Modérée (marche, vélo quotidien) (+1 an)</option>
-              <option value="active">Régulière / sportive (3h+ par semaine) (+3 ans)</option>
+            <label for="dietSelect" class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-1 ml-1">7. Alimentation & Hygiène de vie</label>
+            <select id="dietSelect" required class="w-full bg-[#171a24] border border-[#2b3246] rounded-xl px-3 py-2 text-white font-medium focus:outline-none focus:border-amber-500 focus:ring-2 focus:ring-amber-500/30 text-xs sm:text-sm">
+              <option value="balanced" selected>Équilibrée, produits frais, peu d'ultra-transformé (+2 ans)</option>
+              <option value="standard">Standard / variée (neutre)</option>
+              <option value="processed">Restauration rapide fréquente, sel/sucre élevés (-2 ans)</option>
             </select>
           </div>
 
@@ -124,23 +168,23 @@
 
           <button 
             type="submit" 
-            class="w-full py-3 px-6 rounded-xl font-bold bg-gradient-to-r from-amber-500 via-orange-500 to-rose-500 text-white shadow-lg shadow-orange-500/25 hover:shadow-orange-500/40 hover:scale-[1.01] active:scale-[0.99] transition-all text-sm uppercase tracking-wider mt-2">
+            class="w-full py-3 px-6 rounded-xl font-bold bg-gradient-to-r from-amber-500 via-orange-500 to-rose-500 text-white shadow-lg shadow-orange-500/25 hover:shadow-orange-500/40 hover:scale-[1.01] active:scale-[0.99] transition-all text-xs sm:text-sm uppercase tracking-wider mt-2">
             Calculer mon espérance
           </button>
         </form>
       </div>
 
       <!-- ÉTAPE 2 : EXPLICATION APRÈS VALIDATION -->
-      <div id="stepExplanation" class="hidden text-center py-2 space-y-5">
+      <div id="stepExplanation" class="hidden text-center py-2 space-y-4">
         <div class="inline-flex p-3 rounded-2xl bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">
-          <svg class="w-8 h-8" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <svg class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
           </svg>
         </div>
 
         <div>
           <span class="text-xs uppercase tracking-wider font-semibold text-slate-400">Espérance calculée</span>
-          <div id="explainedYears" class="text-4xl sm:text-5xl font-black text-amber-400 font-display mt-1">82 ans</div>
+          <div id="explainedYears" class="text-4xl sm:text-5xl font-black text-amber-400 font-display mt-0.5">82 ans</div>
         </div>
 
         <div class="bg-[#171a24] border border-[#232839] rounded-xl p-4 text-left text-xs sm:text-sm text-slate-300 leading-relaxed space-y-2.5">
@@ -150,15 +194,15 @@
           <div class="pt-2 border-t border-[#232839] space-y-2 text-slate-400 text-xs">
             <div class="flex items-start gap-2">
               <span class="w-2.5 h-2.5 rounded-xs cell-past shrink-0 mt-0.5"></span>
-              <span><strong>En couleurs chaudes :</strong> toutes les semaines que vous avez déjà vécues depuis votre naissance.</span>
+              <span><strong>En dégradé chaud :</strong> toutes les semaines déjà vécues depuis votre premier jour.</span>
             </div>
             <div class="flex items-start gap-2">
               <span class="w-2.5 h-2.5 rounded-xs cell-current shrink-0 mt-0.5"></span>
-              <span><strong>En bleu scintillant :</strong> la semaine exacte que vous êtes en train de vivre aujourd'hui.</span>
+              <span><strong>En bleu scintillant :</strong> la semaine exacte que vous traversez en ce moment même.</span>
             </div>
             <div class="flex items-start gap-2">
               <span class="w-2.5 h-2.5 rounded-xs cell-future shrink-0 mt-0.5"></span>
-              <span><strong>En grisé :</strong> toutes vos semaines restantes à accomplir, à remplir et à savourer.</span>
+              <span><strong>En grisé :</strong> toutes vos semaines restantes à façonner et à concrétiser.</span>
             </div>
           </div>
         </div>
@@ -166,7 +210,7 @@
         <button 
           id="btnConfirmExplanation" 
           type="button" 
-          class="w-full py-3.5 px-6 rounded-xl font-bold bg-gradient-to-r from-amber-500 via-orange-500 to-rose-500 text-white shadow-lg shadow-orange-500/25 hover:shadow-orange-500/40 hover:scale-[1.01] active:scale-[0.99] transition-all text-sm uppercase tracking-wider">
+          class="w-full py-3.5 px-6 rounded-xl font-bold bg-gradient-to-r from-amber-500 via-orange-500 to-rose-500 text-white shadow-lg shadow-orange-500/25 hover:shadow-orange-500/40 hover:scale-[1.01] active:scale-[0.99] transition-all text-xs sm:text-sm uppercase tracking-wider">
           Accéder à ma grille
         </button>
       </div>
@@ -214,7 +258,7 @@
         <div id="statPercentage" class="text-lg sm:text-2xl font-black text-orange-400 font-display">0%</div>
       </div>
       <div class="bg-[#11131a] border border-[#1e2333] p-3 rounded-xl">
-        <div class="text-[10px] sm:text-xs uppercase tracking-wider text-slate-400 font-semibold mb-0.5">Espérance estimée</div>
+        <div class="text-[10px] sm:text-xs uppercase tracking-wider text-slate-400 font-semibold mb-0.5">Espérance cible</div>
         <div id="statTargetYears" class="text-lg sm:text-2xl font-black text-slate-300 font-display">-</div>
       </div>
     </section>
@@ -263,8 +307,12 @@
     const profileForm = document.getElementById('profileForm');
     const birthDateInput = document.getElementById('birthDateInput');
     const genderSelect = document.getElementById('genderSelect');
+    const hereditySelect = document.getElementById('hereditySelect');
     const smokingSelect = document.getElementById('smokingSelect');
+    const alcoholSelect = document.getElementById('alcoholSelect');
     const activitySelect = document.getElementById('activitySelect');
+    const sleepSelect = document.getElementById('sleepSelect');
+    const dietSelect = document.getElementById('dietSelect');
     const modalError = document.getElementById('modalError');
 
     const btnChangeProfile = document.getElementById('btnChangeProfile');
@@ -281,22 +329,43 @@
 
     let allCells = [];
 
-    // Calcul de l'espérance de vie selon les 3 critères
-    function calculateLifeExpectancy(gender, smoking, activity) {
-      let years = (gender === 'female') ? 85 : 80;
+    // Modèle de calcul fondé sur 7 facteurs actuariels
+    function calculateLifeExpectancy(p) {
+      // 1. Base démographique française
+      let years = (p.gender === 'female') ? 85 : 80;
 
-      if (smoking === 'never') years += 1;
-      else if (smoking === 'former') years -= 2;
-      else if (smoking === 'smoker') years -= 6;
+      // 2. Facteur héréditaire
+      if (p.heredity === 'high') years += 3;
+      else if (p.heredity === 'low') years -= 3;
 
-      if (activity === 'sedentary') years -= 2;
-      else if (activity === 'moderate') years += 1;
-      else if (activity === 'active') years += 3;
+      // 3. Tabagisme
+      if (p.smoking === 'never') years += 1;
+      else if (p.smoking === 'former') years -= 1;
+      else if (p.smoking === 'moderate') years -= 3;
+      else if (p.smoking === 'heavy') years -= 6;
 
+      // 4. Consommation d'alcool
+      if (p.alcohol === 'rare') years += 1;
+      else if (p.alcohol === 'heavy') years -= 3;
+
+      // 5. Activité physique
+      if (p.activity === 'sedentary') years -= 2;
+      else if (p.activity === 'moderate') years += 1;
+      else if (p.activity === 'sporty') years += 3;
+
+      // 6. Qualité de sommeil
+      if (p.sleep === 'regular') years += 1;
+      else if (p.sleep === 'irregular') years -= 1;
+      else if (p.sleep === 'poor') years -= 2;
+
+      // 7. Régime alimentaire & hygiène
+      if (p.diet === 'balanced') years += 2;
+      else if (p.diet === 'processed') years -= 2;
+
+      // Bornes d'ajustement réalistes
       return Math.min(105, Math.max(50, years));
     }
 
-    // Génération de la grille responsive
     function buildGrid(totalYears) {
       gridContainer.innerHTML = '';
       allCells = [];
@@ -348,7 +417,6 @@
       tooltip.classList.add('opacity-0');
     }
 
-    // Mise à jour de la grille et des indicateurs
     function updateDisplay(birthDateStr, targetYears) {
       const birthDate = new Date(birthDateStr);
       if (isNaN(birthDate.getTime())) return false;
@@ -412,65 +480,71 @@
       modalOverlay.classList.add('opacity-0', 'pointer-events-none');
     }
 
-    // Soumission du formulaire : passage à l'étape explicative
     profileForm.addEventListener('submit', (e) => {
       e.preventDefault();
-      const birthDate = birthDateInput.value;
-      const gender = genderSelect.value;
-      const smoking = smokingSelect.value;
-      const activity = activitySelect.value;
+      const params = {
+        birthDate: birthDateInput.value,
+        gender: genderSelect.value,
+        heredity: hereditySelect.value,
+        smoking: smokingSelect.value,
+        alcohol: alcoholSelect.value,
+        activity: activitySelect.value,
+        sleep: sleepSelect.value,
+        diet: dietSelect.value
+      };
 
-      if (!birthDate) return;
+      if (!params.birthDate) return;
 
-      const targetYears = calculateLifeExpectancy(gender, smoking, activity);
-      const ok = updateDisplay(birthDate, targetYears);
+      const targetYears = calculateLifeExpectancy(params);
+      params.targetYears = targetYears;
+
+      const ok = updateDisplay(params.birthDate, targetYears);
 
       if (ok) {
-        localStorage.setItem('user_profile', JSON.stringify({
-          birthDate,
-          gender,
-          smoking,
-          activity,
-          targetYears
-        }));
+        localStorage.setItem('user_profile_advanced', JSON.stringify(params));
 
-        // Personnaliser le texte explicatif
         explainedYears.textContent = `${targetYears} ans`;
         const totalW = targetYears * WEEKS_PER_YEAR;
-        explanationTextSummary.innerHTML = `D'après vos indicateurs, votre grille a été calibrée sur une espérance moyenne de <strong>${targetYears} ans</strong> (soit <strong>${totalW.toLocaleString('fr-FR')} semaines</strong>).`;
+        explanationTextSummary.innerHTML = `D'après vos 7 indicateurs de santé et d'habitudes de vie, votre grille a été calibrée sur une espérance estimée de <strong>${targetYears} ans</strong> (soit <strong>${totalW.toLocaleString('fr-FR')} semaines</strong>).`;
 
-        // Afficher l'écran d'explication
         stepForm.classList.add('hidden');
         stepExplanation.classList.remove('hidden');
       }
     });
 
-    // Bouton de confirmation après l'explication
     btnConfirmExplanation.addEventListener('click', () => {
       closeModal();
     });
 
     btnChangeProfile.addEventListener('click', () => {
-      const saved = localStorage.getItem('user_profile');
+      const saved = localStorage.getItem('user_profile_advanced');
       if (saved) {
         const p = JSON.parse(saved);
-        birthDateInput.value = p.birthDate;
-        genderSelect.value = p.gender;
-        smokingSelect.value = p.smoking;
-        activitySelect.value = p.activity;
+        birthDateInput.value = p.birthDate || '';
+        genderSelect.value = p.gender || 'male';
+        hereditySelect.value = p.heredity || 'average';
+        smokingSelect.value = p.smoking || 'never';
+        alcoholSelect.value = p.alcohol || 'moderate';
+        activitySelect.value = p.activity || 'moderate';
+        sleepSelect.value = p.sleep || 'regular';
+        dietSelect.value = p.diet || 'balanced';
       }
       openModal();
     });
 
     // Chargement initial
-    const savedProfile = localStorage.getItem('user_profile');
+    const savedProfile = localStorage.getItem('user_profile_advanced');
     if (savedProfile) {
       try {
         const p = JSON.parse(savedProfile);
         birthDateInput.value = p.birthDate;
         genderSelect.value = p.gender;
+        hereditySelect.value = p.heredity;
         smokingSelect.value = p.smoking;
+        alcoholSelect.value = p.alcohol;
         activitySelect.value = p.activity;
+        sleepSelect.value = p.sleep;
+        dietSelect.value = p.diet;
         updateDisplay(p.birthDate, p.targetYears);
         closeModal();
       } catch (e) {
